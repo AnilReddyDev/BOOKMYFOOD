@@ -1,53 +1,21 @@
-import { useState, useEffect } from "react";
 import { STAR_ICON } from "../utils/constants";
 import ShimmerCard from "./ShimmerCard";
 import RecommendedMenuCard from "./RecommendedMenuCard";
 import { useParams } from "react-router-dom";
-import { RES_MENU_URL } from "../utils/constants";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
+import { useState } from "react";
 const RestaurantDetails = () => {
-  const [restraurantDetails, setRestraurantDetails] = useState({});
-  const [RecommendedMenu, setRecommendedMenu] = useState([]);
   const { resId } = useParams();
-  console.log(`resId`, resId);
-  const fetchData = async () => {
-    console.log(`useffect entered`);
-    const data = await fetch(RES_MENU_URL + resId);
-    console.log(RES_MENU_URL + resId);
-    const json = await data.json();
-    const {
-      name,
-      city,
-      areaName,
-      avgRating,
-      costForTwoMessage,
-      totalRatingsString,
-      sla,
-      cuisines,
-    } = json.data.cards[2].card.card.info;
+  const [toggleMenuStatus, setToggleMenuStatus] = useState({
+    Recommended: true,
+  });
+  const [restraurantDetails, RecommendedMenu, allCategoryMenu] =
+    useRestaurantMenu(resId);
 
-    setRestraurantDetails({
-      name,
-      city,
-      areaName,
-      avgRating,
-      costForTwoMessage,
-      totalRatingsString,
-      sla,
-      cuisines,
-    });
-    setRecommendedMenu(
-      json.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card
-        .itemCards
-    );
-    console.log(`useffect exited`);
-  };
+  if (!restraurantDetails) return <ShimmerCard />;
+  if (allCategoryMenu.length === 0) return <ShimmerCard />;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (RecommendedMenu.length === 0) return <ShimmerCard />;
-
+  console.log(`toggleMenuStatus`, toggleMenuStatus);
   return (
     <div className="restraurant-details">
       <h1>{restraurantDetails.name}</h1>
@@ -102,25 +70,51 @@ const RestaurantDetails = () => {
           </span>
         </p>
       </div>
-      <div className="recommended-menu">
-        <hr></hr>
-        <h2
-          style={{
-            padding: "15px 0px",
-            fontSize: "20px",
-          }}
-        >
-          Recommended
-        </h2>
-        {RecommendedMenu.map((menu) => {
+
+      <div className="all-menu" style={{ padding: "20px 0px" }}>
+        {allCategoryMenu.map((category) => {
           return (
-            <div key={menu.card.info.id}>
-              <RecommendedMenuCard menu={menu.card.info} />
+            <div key={category.card.card.title} className="category-card">
               <hr></hr>
+              <h1
+                style={{
+                  padding: "15px 0px",
+                  fontSize: "20px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setToggleMenuStatus({
+                    ...toggleMenuStatus,
+                    [category.card.card.title]:
+                      !toggleMenuStatus[category.card.card.title],
+                  });
+                }}
+              >
+                {category.card.card.title} (
+                {category.card.card.itemCards.length})
+                {toggleMenuStatus[category.card.card.title] ? (
+                  <span>▼</span>
+                ) : (
+                  <span>▲</span>
+                )}
+              </h1>
+              {toggleMenuStatus[category.card.card.title] && (
+                <div>
+                  {category.card.card.itemCards.map((menu) => {
+                    return (
+                      <div key={menu.card.info.id}>
+                        <RecommendedMenuCard menu={menu.card.info} />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
-        {/* <RecommendedMenuCard menu={RecommendedMenu[5].card.info} /> */}
       </div>
     </div>
   );

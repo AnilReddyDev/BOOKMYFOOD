@@ -1,8 +1,10 @@
 import { LOGO_SVG } from "../utils/constants";
 import { useState } from "react";
+import useOnlineStatus from "../utils/useOnlineStatus";
 import { Link } from "react-router-dom";
 const Header = () => {
   const [ButtonStatus, setButtonStatus] = useState("Login");
+  const onlineStatus = useOnlineStatus();
   return (
     <div className="header">
       <div className="logo-container">{LOGO_SVG}</div>
@@ -17,7 +19,10 @@ const Header = () => {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-          <li>Cart</li>
+          <li>
+            <Link to="/instamart">InstaMart</Link>
+          </li>
+          <li> {onlineStatus ? "🟢" : "🔴"}</li>
           <button
             className="login-btn"
             onClick={() =>

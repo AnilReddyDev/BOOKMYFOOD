@@ -1,7 +1,6 @@
-import RestCard from "./RestCard";
+import RestCard, { withTopRatedRest } from "./RestCard";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
-import { SWIGGY_API } from "../utils/constants";
 import { Link } from "react-router-dom";
 
 const Body = () => {
@@ -10,6 +9,9 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [location, setLocation] = useState({ lat: null, lon: null });
   const [error, setError] = useState(null);
+
+  //higher order component call
+  const RestCardTopRated = withTopRatedRest(RestCard);
 
   const fetchData = async () => {
     const data = await fetch(
@@ -43,10 +45,10 @@ const Body = () => {
       setError("Geolocation is not supported by this browser.");
     }
   };
-  console.log(`longitude`, location.lon);
-  console.log(`latitude`, location.lat);
+
   useEffect(() => {
     getLocation();
+    console.log(`getloaction`);
   }, []);
 
   useEffect(() => {
@@ -100,7 +102,11 @@ const Body = () => {
           <ShimmerUI />
         ) : (
           filteredRestraurantList.map((res) => {
-            return (
+            return res.info.avgRating > 4.2 ? (
+              <Link to={`/restaurants/${res?.info?.id}`} key={res?.info?.id}>
+                <RestCardTopRated resData={res} />
+              </Link>
+            ) : (
               <Link to={`/restaurants/${res?.info?.id}`} key={res?.info?.id}>
                 <RestCard resData={res} />
               </Link>

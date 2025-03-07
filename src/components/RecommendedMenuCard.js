@@ -2,8 +2,9 @@ import { NONVEG_ICON } from "../utils/constants";
 import { VEG_ICON } from "../utils/constants";
 import { MENU_IMG_URL } from "../utils/constants";
 const RecommendedMenuCard = ({ menu }) => {
-  const { name, defaultPrice, imageId, description, itemAttribute } = menu;
-
+  const { name, defaultPrice, price, imageId, description, itemAttribute } =
+    menu;
+  if (!name) return <h1>No Recommended Menu available! try again later.</h1>;
   return (
     <div className="recommended-card">
       <div className="recommended-card-left">
@@ -18,7 +19,7 @@ const RecommendedMenuCard = ({ menu }) => {
             color: "rgb(16, 16, 16)",
           }}
         >
-          ₹{defaultPrice / 100}
+          ₹{defaultPrice / 100 || price / 100}
         </h2>
         <h3 style={{ fontWeight: "normal", fontSize: "13px", color: "grey" }}>
           {description}
