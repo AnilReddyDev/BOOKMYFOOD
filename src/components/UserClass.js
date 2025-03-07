@@ -1,5 +1,5 @@
 import React from "react";
-
+import userContext from "../utils/userContext";
 class UserClass extends React.Component {
   constructor(props) {
     super(props);
@@ -48,9 +48,18 @@ class UserClass extends React.Component {
           src={avatar_url}
           alt="img"
         />
-        <h3>Name : {name}</h3>
-        <h3>Location: {location}</h3>
+        {/*In class component this way we fetch the context data */}
+        <h3 style={{ paddingTop: "10px" }}>Name : {name}</h3>
+        <h3>
+          Email :
+          <userContext.Consumer>{(item) => item.email}</userContext.Consumer>
+        </h3>
         <h3>Bio: {bio}</h3>
+        <h3>
+          Role:{" "}
+          <userContext.Consumer>{(item) => item.role}</userContext.Consumer>
+        </h3>
+        <h3>Location: {location}</h3>
       </div>
     );
   }

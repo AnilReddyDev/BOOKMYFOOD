@@ -5,18 +5,30 @@ import Body from "./components/Body";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Error from "./components/Error";
 import About from "./components/About";
-import Contact from "./components/Contact";
 import RestaurantDetails from "./components/RestraurantDetails";
-
+import userContext from "./utils/userContext";
 // lazy loading the instamart component (code splitting)
 const InstaMart = lazy(() => import("./components/InstaMart"));
 
 const AppLayout = () => {
+  const [userDetails, setUserDetails] = React.useState({
+    email: "jD1bC@example.com",
+    role: "admin",
+  });
   return (
-    <div className="app-container">
-      <Header />
-      <Outlet />
-    </div>
+    <userContext.Provider
+      value={{
+        email: userDetails.email,
+        role: userDetails.role,
+        setUserDetails,
+        userDetails,
+      }}
+    >
+      <div className="app-container">
+        <Header />
+        <Outlet />
+      </div>
+    </userContext.Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -31,10 +43,6 @@ const appRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
       },
       {
         path: "/instamart",

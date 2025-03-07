@@ -330,7 +330,9 @@
     border: 1px solid black;
     font-size: 14px;
     font-weight: 400;
+    gap: 5px;
     margin: 10px 0px;
+
 }
 
 .rest-card-title {

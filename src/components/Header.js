@@ -17,12 +17,10 @@ const Header = () => {
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
             <Link to="/instamart">InstaMart</Link>
           </li>
           <li> {onlineStatus ? "🟢" : "🔴"}</li>
+          <li></li>
           <button
             className="login-btn"
             onClick={() =>
