@@ -1,14 +1,17 @@
 import RestCard, { withTopRatedRest } from "./RestCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { Link } from "react-router-dom";
-
+import { useContext } from "react";
+import userContext from "../utils/userContext";
+import { CDN_LINK } from "../utils/constants";
 const Body = () => {
   const [restraurantList, setrestraurantList] = useState([]);
   const [filteredRestraurantList, setFilteredrestraurantList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [location, setLocation] = useState({ lat: null, lon: null });
   const [error, setError] = useState(null);
+  const { userDetails, setUserDetails } = useContext(userContext);
 
   //higher order component call
   const RestCardTopRated = withTopRatedRest(RestCard);
@@ -69,9 +72,11 @@ const Body = () => {
             placeholder="Search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            style={{ backgroundColor: "white" }}
           />
           <button
             className="search-btn"
+            style={{ backgroundColor: "white" }}
             onClick={() => {
               const filteredList = restraurantList.filter((res) =>
                 res?.info?.name
@@ -91,6 +96,7 @@ const Body = () => {
             const filteredList = restraurantList.filter(
               (restraurant) => restraurant?.info?.avgRatingString > 4.2
             );
+
             setFilteredrestraurantList(filteredList);
           }}
         >
@@ -103,11 +109,29 @@ const Body = () => {
         ) : (
           filteredRestraurantList.map((res) => {
             return res.info.avgRating > 4.2 ? (
-              <Link to={`/restaurants/${res?.info?.id}`} key={res?.info?.id}>
+              <Link
+                to={`/restaurants/${res?.info?.id}`}
+                onClick={() =>
+                  setUserDetails({
+                    ...userDetails,
+                    resturl: CDN_LINK + res?.info?.cloudinaryImageId,
+                  })
+                }
+                key={res?.info?.id}
+              >
                 <RestCardTopRated resData={res} />
               </Link>
             ) : (
-              <Link to={`/restaurants/${res?.info?.id}`} key={res?.info?.id}>
+              <Link
+                to={`/restaurants/${res?.info?.id}`}
+                onClick={() =>
+                  setUserDetails({
+                    ...userDetails,
+                    resturl: CDN_LINK + res?.info?.cloudinaryImageId,
+                  })
+                }
+                key={res?.info?.id}
+              >
                 <RestCard resData={res} />
               </Link>
             );

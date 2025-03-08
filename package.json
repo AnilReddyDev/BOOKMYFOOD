@@ -11,9 +11,11 @@
   "author": "anil",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.6.1",
     "parcel": "^2.13.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^6.30.0"
   },
   "devDependencies": {

@@ -7,6 +7,9 @@ import Error from "./components/Error";
 import About from "./components/About";
 import RestaurantDetails from "./components/RestraurantDetails";
 import userContext from "./utils/userContext";
+import Cart from "./components/Cart";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 // lazy loading the instamart component (code splitting)
 const InstaMart = lazy(() => import("./components/InstaMart"));
 
@@ -14,21 +17,25 @@ const AppLayout = () => {
   const [userDetails, setUserDetails] = React.useState({
     email: "jD1bC@example.com",
     role: "admin",
+    resturl: "testing",
   });
   return (
-    <userContext.Provider
-      value={{
-        email: userDetails.email,
-        role: userDetails.role,
-        setUserDetails,
-        userDetails,
-      }}
-    >
-      <div className="app-container">
-        <Header />
-        <Outlet />
-      </div>
-    </userContext.Provider>
+    <Provider store={appStore}>
+      <userContext.Provider
+        value={{
+          email: userDetails.email,
+          role: userDetails.role,
+          resturl: userDetails.resturl,
+          setUserDetails,
+          userDetails,
+        }}
+      >
+        <div className="app-container">
+          <Header />
+          <Outlet />
+        </div>
+      </userContext.Provider>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -43,6 +50,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/instamart",

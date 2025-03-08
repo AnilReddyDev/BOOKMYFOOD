@@ -3,9 +3,10 @@ import { STAR_ICON } from "../utils/constants";
 const RestCard = (props) => {
   const { name, cloudinaryImageId, avgRatingString, sla, cuisines, areaName } =
     props.resData.info;
+  const RestImgURL = CDN_LINK + cloudinaryImageId;
   return (
     <div className="rest-card">
-      <img className="rest-card-img" src={CDN_LINK + cloudinaryImageId} />
+      <img className="rest-card-img" src={RestImgURL} />
       <div className="rest-card-info">
         <h2>{name}</h2>
         <h3 className="rest-card-rating">

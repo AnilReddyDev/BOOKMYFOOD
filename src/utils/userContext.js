@@ -1,8 +1,8 @@
 import { createContext } from "react";
-
 const userContext = createContext({
-  email: "jD1bC@example.com",
-  role: "admin",
+  email: "",
+  role: "",
+  resturl: "",
 });
 
 export default userContext;

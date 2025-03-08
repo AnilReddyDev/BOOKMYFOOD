@@ -1,5 +1,5 @@
 import ShimmerCard from "./ShimmerCard";
-import RecommendedMenuCard from "./RecommendedMenuCard";
+import RestaurantMenuCard from "./RestaurantMenuCard";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import { useState } from "react";
@@ -12,7 +12,6 @@ const RestaurantDetails = () => {
   });
   const [restraurantDetails, RecommendedMenu, allCategoryMenu] =
     useRestaurantMenu(resId);
-
   if (!restraurantDetails) return <ShimmerCard />;
   if (allCategoryMenu.length === 0) return <ShimmerCard />;
 
@@ -37,7 +36,10 @@ const RestaurantDetails = () => {
                   {category.card.card.itemCards.map((menu) => {
                     return (
                       <div key={menu.card.info.id}>
-                        <RecommendedMenuCard menu={menu.card.info} />
+                        <RestaurantMenuCard
+                          menu={menu.card.info}
+                          restraurantDetails={restraurantDetails}
+                        />
                       </div>
                     );
                   })}
