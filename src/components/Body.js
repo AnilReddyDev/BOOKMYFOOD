@@ -2,7 +2,6 @@ import RestCard, { withTopRatedRest } from "./RestCard";
 import { useContext, useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import userContext from "../utils/userContext";
 import { CDN_LINK } from "../utils/constants";
 const Body = () => {
@@ -73,6 +72,7 @@ const Body = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             style={{ backgroundColor: "white" }}
+            data-testid="inputText"
           />
           <button
             className="search-btn"

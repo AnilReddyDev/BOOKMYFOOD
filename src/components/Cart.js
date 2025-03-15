@@ -13,7 +13,6 @@ const Cart = () => {
     (item) => (itemTotalprice += item?.price / 100 || item?.defaultPrice / 100)
   );
   const dispatch = useDispatch();
-
   const HandleClearCart = () => {
     dispatch(clearItems());
   };

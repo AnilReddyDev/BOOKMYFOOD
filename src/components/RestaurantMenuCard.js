@@ -29,7 +29,7 @@ const RestaurantMenuCard = ({ menu, restraurantDetails }) => {
   };
   if (!name) return <h1>No Recommended Menu available! try again later.</h1>;
   return (
-    <div className="recommended-card">
+    <div className="recommended-card" data-testid="menuCardItem">
       <div className="recommended-card-left">
         <span>{vegClassifier === "NONVEG" ? NONVEG_ICON : VEG_ICON}</span>
         <h1 style={{ fontWeight: "bold", fontSize: "18px" }}>{name}</h1>

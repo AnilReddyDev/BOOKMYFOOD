@@ -2,9 +2,9 @@
   "name": "bookmyfood",
   "version": "1.0.0",
   "description": "Food orfing platform",
-  "type": "module",
   "scripts": {
     "test": "jest",
+    "watch-test": "jest --watch",
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
@@ -19,6 +19,15 @@
     "react-router-dom": "^6.30.0"
   },
   "devDependencies": {
-    "process": "^0.11.10"
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "process": "^0.11.10",
+    "react-test-renderer": "^19.0.0"
   }
 }

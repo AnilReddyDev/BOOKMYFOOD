@@ -37,6 +37,7 @@ const Header = () => {
                 ? setButtonStatus("Logout")
                 : setButtonStatus("Login")
             }
+            name="login-btn"
           >
             {ButtonStatus}
           </button>
